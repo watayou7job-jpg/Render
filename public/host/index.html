@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>司会操作画面</title>
+<link rel="stylesheet" href="/shared/style.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="auth-gate" class="auth-gate">
+  <div class="gs-panel">
+    <p class="gs-title" style="font-size:1.2rem;">司会用パスワードを入力してください</p>
+    <input type="password" id="auth-password-input" />
+    <button id="auth-submit-btn" class="gs-btn">ログイン</button>
+    <p id="auth-error" class="error-text"></p>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <h1 class="gs-title" style="font-size:1.5rem;">司会操作画面</h1>
+
+  <div id="backup-banner" class="gs-panel hidden">
+    <p id="backup-text"></p>
+    <button id="resume-backup-btn" class="gs-btn">続きから再開</button>
+    <button id="discard-backup-btn" class="gs-btn gs-btn-danger">破棄して最初から</button>
+  </div>
+
+  <div class="columns">
+    <div class="gs-panel col-main">
+      <div id="stage-lobby">
+        <button id="open-registration-btn" class="gs-btn">参加受付開始</button>
+        <button id="start-quiz-btn" class="gs-btn" disabled>クイズ開始</button>
+      </div>
+
+      <div id="stage-question" class="hidden">
+        <p id="host-q-index" class="gs-title"></p>
+        <p id="host-q-text"></p>
+        <p id="host-answer-count"></p>
+        <button id="reveal-btn" class="gs-btn">正解発表</button>
+        <button id="next-question-btn" class="gs-btn hidden">次の問題へ</button>
+        <button id="start-ranking-btn" class="gs-btn hidden">結果発表へ</button>
+      </div>
+
+      <div id="stage-ranking" class="hidden">
+        <p>下位のランキングをスクロール表示中です...</p>
+        <button id="next-rank-btn" class="gs-btn">次の順位へ</button>
+        <p id="rank-progress"></p>
+        <a id="csv-link" class="gs-btn hidden" href="/api/results/csv" download>結果をCSVでダウンロード</a>
+      </div>
+    </div>
+
+    <div class="gs-panel col-participants">
+      <p class="gs-title">参加者一覧 (<span id="participant-total">0</span>人)</p>
+      <ul id="participant-list"></ul>
+    </div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

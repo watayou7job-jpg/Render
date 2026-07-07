@@ -1,0 +1,5 @@
+{
+  "minGuaranteeRatio": 0.5,
+  "defaultTimeLimitSec": 15,
+  "defaultPoints": 1000
+}

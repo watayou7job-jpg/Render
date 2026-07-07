@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>問題編集画面</title>
+<link rel="stylesheet" href="/shared/style.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <h1 class="gs-title" style="font-size:1.5rem;">問題編集画面</h1>
+
+  <div class="gs-panel">
+    <h2 class="gs-title" style="font-size:1.1rem;">全体設定</h2>
+    <label>最低保証割合(不正解時ではなく正解時の最低得点割合。0.5 = 50%)
+      <input id="min-guarantee" type="number" step="0.05" min="0" max="1" />
+    </label>
+    <label>デフォルト制限時間(秒)
+      <input id="default-time" type="number" min="1" />
+    </label>
+    <label>デフォルト配点
+      <input id="default-points" type="number" min="0" />
+    </label>
+    <button id="save-settings-btn" class="gs-btn">設定を保存</button>
+    <span id="settings-saved-msg" class="saved-msg hidden">保存しました</span>
+  </div>
+
+  <div class="gs-panel">
+    <h2 class="gs-title" style="font-size:1.1rem;">問題一覧 (<span id="question-count">0</span>問)</h2>
+    <div id="question-list"></div>
+    <button id="add-question-btn" class="gs-btn">+ 問題を追加</button>
+  </div>
+</div>
+
+<template id="question-template">
+  <div class="question-card gs-panel">
+    <div class="q-card-header">
+      <span class="q-num"></span>
+      <div>
+        <button class="gs-btn move-up-btn">↑</button>
+        <button class="gs-btn move-down-btn">↓</button>
+        <button class="gs-btn gs-btn-danger delete-btn">削除</button>
+      </div>
+    </div>
+    <label>問題文
+      <textarea class="q-text-input" rows="2"></textarea>
+    </label>
+    <label>問題画像(任意, jpg/png 5MBまで)
+      <input type="file" class="q-image-input" accept="image/jpeg,image/png" />
+    </label>
+    <img class="q-image-preview hidden" />
+    <div class="choices-edit">
+      <div class="choice-edit-row">
+        <input type="radio" name="" class="q-correct-radio" data-idx="0" />
+        <input type="text" class="q-choice-input" data-idx="0" placeholder="選択肢1(青)" />
+      </div>
+      <div class="choice-edit-row">
+        <input type="radio" name="" class="q-correct-radio" data-idx="1" />
+        <input type="text" class="q-choice-input" data-idx="1" placeholder="選択肢2(赤)" />
+      </div>
+      <div class="choice-edit-row">
+        <input type="radio" name="" class="q-correct-radio" data-idx="2" />
+        <input type="text" class="q-choice-input" data-idx="2" placeholder="選択肢3(緑)" />
+      </div>
+      <div class="choice-edit-row">
+        <input type="radio" name="" class="q-correct-radio" data-idx="3" />
+        <input type="text" class="q-choice-input" data-idx="3" placeholder="選択肢4(黄)" />
+      </div>
+    </div>
+    <div class="q-meta-row">
+      <label>制限時間(秒) <input type="number" class="q-time-input" min="1" /></label>
+      <label>配点 <input type="number" class="q-points-input" min="0" /></label>
+    </div>
+    <button class="gs-btn save-question-btn">この問題を保存</button>
+    <span class="saved-msg hidden">保存しました</span>
+  </div>
+</template>
+
+<script src="app.js"></script>
+</body>
+</html>

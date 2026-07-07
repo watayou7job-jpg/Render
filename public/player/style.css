@@ -1,0 +1,54 @@
+.screen-wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#name-input {
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid var(--gs-gold);
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.error-text {
+  color: #ffb3b3;
+  font-weight: 700;
+  min-height: 1.2em;
+}
+
+.q-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 900;
+  font-size: 1.2rem;
+}
+
+.q-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  min-height: 3em;
+}
+
+.choices-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.choice-btn {
+  min-height: 90px;
+  font-size: 1.1rem;
+}

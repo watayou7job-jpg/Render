@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>クイズ参加</title>
+<link rel="stylesheet" href="/shared/style.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app" class="screen-wrap">
+  <div id="view-join" class="view">
+    <h1 class="gs-title" style="font-size:1.6rem;text-align:center;">結婚式クイズ大会</h1>
+    <div class="gs-panel">
+      <p>お名前を入力して参加してください</p>
+      <input id="name-input" type="text" maxlength="20" placeholder="例: たなか" />
+      <button id="join-btn" class="gs-btn" style="width:100%;margin-top:12px;">参加する</button>
+      <p id="join-error" class="error-text"></p>
+    </div>
+  </div>
+
+  <div id="view-waiting" class="view hidden">
+    <div class="gs-panel" style="text-align:center;">
+      <p class="gs-title" style="font-size:1.3rem;">参加登録が完了しました!</p>
+      <p>クイズが始まるまで少々お待ちください</p>
+    </div>
+  </div>
+
+  <div id="view-question" class="view hidden">
+    <div class="q-header">
+      <span id="q-index"></span>
+      <span id="q-timer"></span>
+    </div>
+    <p id="q-text" class="q-text gs-panel"></p>
+    <div id="choices" class="choices-grid">
+      <button class="choice-btn choice-0" data-idx="0"></button>
+      <button class="choice-btn choice-1" data-idx="1"></button>
+      <button class="choice-btn choice-2" data-idx="2"></button>
+      <button class="choice-btn choice-3" data-idx="3"></button>
+    </div>
+    <p id="answered-msg" class="hidden gs-title" style="text-align:center;">回答しました!結果をお待ちください</p>
+  </div>
+
+  <div id="view-reveal" class="view hidden">
+    <div id="reveal-panel" class="gs-panel" style="text-align:center;">
+      <p id="reveal-result" class="gs-title" style="font-size:2rem;"></p>
+      <p id="reveal-score">獲得ポイント: <span id="score-gained"></span></p>
+      <p id="reveal-total">合計得点: <span id="total-score"></span></p>
+    </div>
+  </div>
+
+  <div id="view-final" class="view hidden">
+    <div class="gs-panel" style="text-align:center;">
+      <p class="gs-title" style="font-size:1.4rem;">全問終了!</p>
+      <p>結果発表をスクリーンでご覧ください</p>
+    </div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

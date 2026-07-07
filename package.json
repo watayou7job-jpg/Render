@@ -1,0 +1,19 @@
+{
+  "name": "wedding-quiz-app",
+  "version": "1.0.0",
+  "description": "結婚式2次会用オールスター感謝祭風クイズアプリ",
+  "main": "server/index.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5",
+    "qrcode": "^1.5.3",
+    "multer": "^2.0.0",
+    "uuid": "^11.1.0"
+  }
+}

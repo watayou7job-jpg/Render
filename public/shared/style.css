@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700;900&display=swap');
+
+:root {
+  --gs-red: #c8102e;
+  --gs-red-dark: #8a0b1f;
+  --gs-gold: #ffd700;
+  --gs-gold-dark: #b8960a;
+  --gs-black: #111111;
+  --gs-choice-blue: #1565c0;
+  --gs-choice-red: #c8102e;
+  --gs-choice-green: #2e7d32;
+  --gs-choice-yellow: #f9a825;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Noto Sans JP', sans-serif;
+  background: radial-gradient(ellipse at center, var(--gs-red-dark) 0%, var(--gs-black) 75%);
+  color: #fff;
+}
+
+.gs-title {
+  font-weight: 900;
+  color: #fff;
+  -webkit-text-stroke: 3px var(--gs-black);
+  paint-order: stroke fill;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.8), 0 4px 8px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.05em;
+}
+
+.gs-panel {
+  background: rgba(0, 0, 0, 0.55);
+  border: 3px solid var(--gs-gold);
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+  padding: 24px;
+}
+
+.gs-btn {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: #fff;
+  background: linear-gradient(180deg, var(--gs-gold) 0%, var(--gs-gold-dark) 100%);
+  color: var(--gs-black);
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #7a6108, 0 6px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.1s ease;
+}
+
+.gs-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #7a6108;
+}
+
+.gs-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.gs-btn-danger {
+  background: linear-gradient(180deg, #ff5252 0%, var(--gs-red-dark) 100%);
+  color: #fff;
+  box-shadow: 0 4px 0 #5a0714;
+}
+
+.choice-btn {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 900;
+  font-size: 1.3rem;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 24px;
+  cursor: pointer;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.35), 0 8px 16px rgba(0, 0, 0, 0.4);
+  transition: transform 0.1s ease;
+  -webkit-text-stroke: 1.5px var(--gs-black);
+  paint-order: stroke fill;
+}
+
+.choice-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+}
+
+.choice-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.choice-0 { background: var(--gs-choice-blue); }
+.choice-1 { background: var(--gs-choice-red); }
+.choice-2 { background: var(--gs-choice-green); }
+.choice-3 { background: var(--gs-choice-yellow); color: var(--gs-black); }
+
+.flash-correct {
+  animation: flashCorrect 0.9s ease-out;
+}
+
+.flash-incorrect {
+  animation: flashIncorrect 0.9s ease-out;
+}
+
+@keyframes flashCorrect {
+  0% { background-color: rgba(255, 215, 0, 0.9); }
+  100% { background-color: transparent; }
+}
+
+@keyframes flashIncorrect {
+  0% { background-color: rgba(0, 0, 0, 0.9); }
+  100% { background-color: transparent; }
+}
+
+.gs-flash-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}

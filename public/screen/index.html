@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>クイズ投影画面</title>
+<link rel="stylesheet" href="/shared/style.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <div id="view-waiting" class="view">
+    <h1 class="gs-title" style="font-size:4rem;text-align:center;">結婚式クイズ大会</h1>
+    <div class="waiting-body">
+      <div id="qr-box" class="gs-panel">
+        <img id="qr-img" alt="QRコード" />
+        <p id="qr-url"></p>
+      </div>
+      <div class="gs-panel" style="text-align:center;">
+        <p style="font-size:1.6rem;">参加者数</p>
+        <p id="participant-count" class="gs-title" style="font-size:4rem;">0</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-question" class="view hidden">
+    <div class="q-top">
+      <span id="q-index" class="gs-title"></span>
+      <span id="q-timer" class="gs-title"></span>
+      <span id="answer-count" class="gs-title"></span>
+    </div>
+    <div id="q-image-wrap" class="hidden">
+      <img id="q-image" />
+    </div>
+    <p id="q-text" class="gs-title q-text"></p>
+    <div id="choices" class="choices-grid">
+      <div class="choice-display choice-0" data-idx="0"></div>
+      <div class="choice-display choice-1" data-idx="1"></div>
+      <div class="choice-display choice-2" data-idx="2"></div>
+      <div class="choice-display choice-3" data-idx="3"></div>
+    </div>
+  </div>
+
+  <div id="view-reveal" class="view hidden">
+    <p class="gs-title" style="font-size:2.2rem;text-align:center;">正解発表!</p>
+    <div id="reveal-choices" class="choices-grid"></div>
+  </div>
+
+  <div id="view-ranking-scroll" class="view hidden">
+    <p class="gs-title" style="font-size:2rem;text-align:center;">結果発表</p>
+    <div id="scroll-viewport" class="scroll-viewport">
+      <div id="scroll-list" class="scroll-list"></div>
+    </div>
+  </div>
+
+  <div id="view-ranking-top" class="view hidden">
+    <p class="gs-title" style="font-size:2rem;text-align:center;">結果発表</p>
+    <div id="top-list" class="top-list"></div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
