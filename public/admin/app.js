@@ -137,6 +137,80 @@ function renderQuestions() {
   });
 }
 
+function questionsToTsv() {
+  return questions
+    .map((q) => [
+      q.text || '',
+      ...(q.choices || ['', '', '', '']),
+      (q.correctIndex ?? 0) + 1,
+      q.timeLimitSec ?? '',
+      q.points ?? '',
+    ].join('\t'))
+    .join('\n');
+}
+
+function parseTsvToQuestions(tsv) {
+  const lines = tsv.split(/\r\n|\r|\n/).map((l) => l.trim()).filter((l) => l.length > 0);
+  const parsed = [];
+  const errors = [];
+
+  lines.forEach((line, i) => {
+    const cols = line.split('\t').map((c) => c.trim());
+    if (cols.length < 6) {
+      errors.push(`${i + 1}行目: 列数が足りません(問題文・選択肢4つ・正解の6列以上が必要)`);
+      return;
+    }
+    const [text, c1, c2, c3, c4, correctStr, timeStr, pointsStr] = cols;
+    const correctNum = Number(correctStr);
+    if (!text || !c1 || !c2 || !c3 || !c4) {
+      errors.push(`${i + 1}行目: 問題文または選択肢が空です`);
+      return;
+    }
+    if (!Number.isInteger(correctNum) || correctNum < 1 || correctNum > 4) {
+      errors.push(`${i + 1}行目: 正解は1〜4の数字で入力してください`);
+      return;
+    }
+    parsed.push({
+      text,
+      imagePath: null,
+      choices: [c1, c2, c3, c4],
+      correctIndex: correctNum - 1,
+      timeLimitSec: timeStr ? Number(timeStr) : settings.defaultTimeLimitSec,
+      points: pointsStr ? Number(pointsStr) : settings.defaultPoints,
+    });
+  });
+
+  return { parsed, errors };
+}
+
+document.getElementById('bulk-export-btn').addEventListener('click', () => {
+  document.getElementById('bulk-textarea').value = questionsToTsv();
+});
+
+document.getElementById('bulk-import-btn').addEventListener('click', async () => {
+  const bulkMessage = document.getElementById('bulk-message');
+  const raw = document.getElementById('bulk-textarea').value;
+  const { parsed, errors } = parseTsvToQuestions(raw);
+
+  if (errors.length > 0) {
+    bulkMessage.textContent = `取り込めませんでした: ${errors.join(' / ')}`;
+    bulkMessage.classList.remove('hidden');
+    return;
+  }
+  if (parsed.length === 0) {
+    bulkMessage.textContent = '登録する問題がありません。';
+    bulkMessage.classList.remove('hidden');
+    return;
+  }
+
+  questions = [...questions, ...parsed];
+  await persistQuestions();
+  renderQuestions();
+  bulkMessage.textContent = `${parsed.length}問を追加登録しました。`;
+  bulkMessage.classList.remove('hidden');
+  setTimeout(() => bulkMessage.classList.add('hidden'), 3000);
+});
+
 document.getElementById('add-question-btn').addEventListener('click', () => {
   questions.push({
     text: '',

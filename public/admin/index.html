@@ -26,6 +26,20 @@
   </div>
 
   <div class="gs-panel">
+    <h2 class="gs-title" style="font-size:1.1rem;">テキストで一括登録・書き出し</h2>
+    <p>
+      1行につき1問、タブ区切りで「問題文, 選択肢1, 選択肢2, 選択肢3, 選択肢4, 正解(1〜4), 制限時間(秒・任意), 配点(任意)」の順に入力してください。
+      Excel/Googleスプレッドジートに同じ並びで表を作り、そのままコピー&ペーストできます。制限時間・配点を空欄にした場合は全体設定のデフォルト値が使われます。
+      <br>
+      サーバーが再起動すると登録済みの問題は消えるため(永続ディスク未設定のため)、「書き出す」でこのテキストをコピーして手元に保管しておくと、当日すぐに「読み込む」で復元できます。
+    </p>
+    <textarea id="bulk-textarea" rows="8" placeholder="新郎の出身地は?&#9;東京&#9;大阪&#9;福岡&#9;札幌&#9;1&#9;15&#9;1000"></textarea>
+    <button id="bulk-export-btn" class="gs-btn">現在の問題を書き出す</button>
+    <button id="bulk-import-btn" class="gs-btn">このテキストから追加登録</button>
+    <p id="bulk-message" class="saved-msg hidden"></p>
+  </div>
+
+  <div class="gs-panel">
     <h2 class="gs-title" style="font-size:1.1rem;">問題一覧 (<span id="question-count">0</span>問)</h2>
     <div id="question-list"></div>
     <button id="add-question-btn" class="gs-btn">+ 問題を追加</button>

@@ -25,6 +25,12 @@ textarea {
   margin-top: 4px;
 }
 
+#bulk-textarea {
+  font-family: monospace;
+  font-size: 0.85rem;
+  white-space: pre;
+}
+
 .question-card {
   margin-bottom: 16px;
 }
