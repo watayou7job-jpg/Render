@@ -11,6 +11,15 @@ const { loadQuestions, saveQuestions, loadSettings, saveSettings } = require('./
 const { QuizState } = require('./state');
 const { generateCsv, saveCsvToDisk } = require('./csv');
 
+// 結婚式当日は誰もサーバーログを監視していない前提のため、想定外のエラーで
+// プロセス全体が落ちて復旧不能になることを避け、ログに残して処理を続行する。
+process.on('uncaughtException', (err) => {
+  console.error('uncaughtException:', err);
+});
+process.on('unhandledRejection', (err) => {
+  console.error('unhandledRejection:', err);
+});
+
 const PORT = process.env.PORT || 3001;
 const UPLOADS_DIR = path.join(__dirname, '..', 'data', 'uploads');
 
@@ -285,9 +294,14 @@ io.on('connection', (socket) => {
     broadcastParticipants();
   }));
 
-  socket.on('host:startQuiz', requireHostAuth(socket, () => {
+  socket.on('host:startQuiz', requireHostAuth(socket, (ack) => {
+    if (quiz.questions.length === 0) {
+      ack && ack({ error: 'no_questions' });
+      return;
+    }
     quiz.startQuiz();
     openCurrentQuestion();
+    ack && ack({ ok: true });
   }));
 
   socket.on('host:revealAnswer', requireHostAuth(socket, () => {

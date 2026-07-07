@@ -64,7 +64,11 @@ openRegistrationBtn.addEventListener('click', () => {
 });
 
 startQuizBtn.addEventListener('click', () => {
-  socket.emit('host:startQuiz');
+  socket.emit('host:startQuiz', (res) => {
+    if (res && res.error === 'no_questions') {
+      window.alert('問題が1問も登録されていません。先に管理画面(/admin)で問題を登録してください。');
+    }
+  });
 });
 
 revealBtn.addEventListener('click', () => {
