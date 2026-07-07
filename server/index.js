@@ -145,10 +145,12 @@ const participantIdToSocketId = new Map();
 let lockTimer = null;
 
 function broadcastParticipants() {
-  io.to('host').emit('participants:update', {
+  const payload = {
     list: quiz.getParticipantList(),
     registrationOpen: quiz.registrationOpen,
-  });
+  };
+  io.to('host').emit('participants:update', payload);
+  io.to('screen').emit('participants:update', payload);
 }
 
 function broadcastQuestion() {
@@ -247,6 +249,10 @@ io.on('connection', (socket) => {
     }
 
     if (role === 'screen') {
+      socket.emit('participants:update', {
+        list: quiz.getParticipantList(),
+        registrationOpen: quiz.registrationOpen,
+      });
       emitCurrentQuestionState(socket, true);
     }
   });
