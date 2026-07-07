@@ -78,6 +78,7 @@ body {
   text-align: center;
   padding: 20px;
   -webkit-text-stroke: 1.5px var(--gs-black);
+  paint-order: stroke fill;
 }
 
 .choice-display.correct {
