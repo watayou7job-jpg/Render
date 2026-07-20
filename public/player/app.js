@@ -119,6 +119,15 @@ socket.on('ranking:scrollData', () => {
   showView('final');
 });
 
+socket.on('quiz:reset', () => {
+  clearInterval(timerInterval);
+  localStorage.removeItem('quizParticipantId');
+  resetChoices();
+  joinError.textContent = '';
+  nameInput.value = '';
+  showView('join');
+});
+
 window.addEventListener('load', () => {
   const savedId = localStorage.getItem('quizParticipantId');
   if (!savedId) {

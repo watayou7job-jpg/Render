@@ -377,6 +377,18 @@ io.on('connection', (socket) => {
     io.to('host').emit('ranking:topReveal', entry);
   }));
 
+  socket.on('host:resetQuiz', requireHostAuth(socket, () => {
+    clearTimeout(lockTimer);
+    quiz.reset();
+    quiz.discardBackup();
+    socketIdToParticipantId.clear();
+    participantIdToSocketId.clear();
+    io.to('player').emit('quiz:reset');
+    io.to('screen').emit('quiz:reset');
+    io.to('host').emit('quiz:reset');
+    broadcastParticipants();
+  }));
+
   socket.on('host:resumeBackup', requireHostAuth(socket, () => {
     quiz.restoreFromBackup();
     broadcastParticipants();

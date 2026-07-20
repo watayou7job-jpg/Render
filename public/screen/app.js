@@ -84,7 +84,10 @@ socket.on('reveal:show', (payload) => {
   });
 });
 
+let rankingScrollTimeout = null;
+
 socket.on('ranking:scrollData', (payload) => {
+  clearTimeout(rankingScrollTimeout);
   showView('rankingScroll');
   const ranking = payload.ranking;
   const lowerList = ranking.filter((r) => r.rank > 10);
@@ -109,7 +112,7 @@ socket.on('ranking:scrollData', (payload) => {
       listEl.style.transition = 'transform 8s linear';
       listEl.style.transform = 'translateY(0)';
     });
-    setTimeout(() => {
+    rankingScrollTimeout = setTimeout(() => {
       showView('rankingTop');
     }, 8500);
   });
@@ -122,4 +125,16 @@ socket.on('ranking:topReveal', (entry) => {
   row.className = `top-row rank-${entry.rank}`;
   row.innerHTML = `<span class="rank-num">${entry.rank}位</span><span>${entry.name}</span><span>${entry.totalScore}点</span>`;
   topListEl.appendChild(row);
+});
+
+socket.on('quiz:reset', () => {
+  clearInterval(timerInterval);
+  clearTimeout(rankingScrollTimeout);
+  document.getElementById('scroll-list').innerHTML = '';
+  document.getElementById('top-list').innerHTML = '';
+  choiceDisplays.forEach((el) => {
+    el.textContent = '';
+    el.classList.remove('correct');
+  });
+  showView('waiting');
 });

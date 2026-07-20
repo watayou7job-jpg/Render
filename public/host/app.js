@@ -19,6 +19,7 @@ const startRankingBtn = document.getElementById('start-ranking-btn');
 const nextRankBtn = document.getElementById('next-rank-btn');
 const rankProgress = document.getElementById('rank-progress');
 const csvLink = document.getElementById('csv-link');
+const resetQuizBtn = document.getElementById('reset-quiz-btn');
 
 let currentQuestionInfo = null;
 let rankRevealCount = 0;
@@ -86,6 +87,13 @@ startRankingBtn.addEventListener('click', () => {
   nextRankBtn.disabled = false;
   rankProgress.textContent = '';
   csvLink.classList.add('hidden');
+  resetQuizBtn.classList.add('hidden');
+});
+
+resetQuizBtn.addEventListener('click', () => {
+  const confirmed = window.confirm('参加者・スコア・問題進行状況をすべてリセットし、最初の待機画面に戻ります。よろしいですか?');
+  if (!confirmed) return;
+  socket.emit('host:resetQuiz');
 });
 
 nextRankBtn.addEventListener('click', () => {
@@ -184,5 +192,15 @@ socket.on('ranking:topReveal', (entry) => {
   if (rankRevealCount >= topTotal) {
     nextRankBtn.disabled = true;
     csvLink.classList.remove('hidden');
+    resetQuizBtn.classList.remove('hidden');
   }
+});
+
+socket.on('quiz:reset', () => {
+  openRegistrationBtn.disabled = false;
+  startQuizBtn.disabled = true;
+  currentQuestionInfo = null;
+  rankRevealCount = 0;
+  document.getElementById('backup-banner').classList.add('hidden');
+  showStage('lobby');
 });
